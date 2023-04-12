@@ -37,18 +37,18 @@ const totalPage = computed(() => {
   <div class="events">
     <EventCard v-for="event in events" :key="event.id" :event="event" />
     <div class="pagination">
-      <router-link
+      <RouterLink
         :to="{ name: 'event-list', query: { page: page - 1 } }"
         rel="prev"
         v-if="page != 1"
-        class="prev">Previus</router-link
+        class="prev">Previus</RouterLink
       >
-      <router-link
+      <RouterLink
         :to="{ name: 'event-list', query: { page: page + 1 } }"
         rel="next"
         v-if="page < totalPage"
         class="next"
-        >Next</router-link
+        >Next</RouterLink
       >
     </div>
   </div>

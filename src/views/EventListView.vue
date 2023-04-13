@@ -13,10 +13,11 @@ const props = defineProps({
 const events = ref(null)
 const perPage = 2
 const totalEvent = ref(null)
-
+const loaded = ref(null)
 
 onMounted(async () => {
   watchEffect(() => {
+    loaded.value = false
     EventService.getEvents(perPage, props.page)
       .then((response) => {
         events.value = response.data
@@ -25,23 +26,23 @@ onMounted(async () => {
       .catch((error) => {
         console.log(error)
       })
+      .finally(()=>{
+        console.log(loaded.value)
+        loaded.value = true
+      })
   })
 })
-
  
 const totalPage = computed(() => {
   return totalEvent.value / perPage
 })
 
-const loading = computed(() => {
-  return events.value?.length > 0
-})
 </script>
 
 <template>
   <h1>Events For Good</h1>
   <div class="events">
-    <div class="loading" v-if="!loading"><div></div><div></div><div></div><div></div></div>
+    <div class="loading" v-if="!loaded"><div></div><div></div><div></div><div></div></div>
     <EventCard v-else v-for="event in events" :key="event.id" :event="event" />
     <div class="pagination">
       <RouterLink

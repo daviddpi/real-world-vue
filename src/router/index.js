@@ -19,12 +19,13 @@ const router = createRouter({
       props: (route) => ({ page: parseInt(route.query.page) || 1 }),
     },
     {
-      path: '/about',
+      path: '/about-us',
       name: 'about',
       component: AboutView,
+      alias: '/about',
     },
     {
-      path: '/event/:id',
+      path: '/events/:id',
       name: 'event-layout',
       props: true,
       component: LayoutView,
@@ -45,6 +46,12 @@ const router = createRouter({
           component: EventEditView
         },
       ]
+    },
+    {
+      path: '/event/:afterEvent(.*)',
+      redirect: to => {
+        return { path: '/events/' + to.params.afterEvent }
+      }
     },
     
   ],

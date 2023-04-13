@@ -5,7 +5,7 @@ import EventDetails from '../views/event/DetailsView.vue'
 import EventRegisterView from '../views/event/RegisterView.vue'
 import EventEditView from '../views/event/EditView.vue'
 import LayoutView from '../views/event/LayoutView.vue'
-
+import NotFoundView from '../views/NotFoundView.vue'
 
 
 
@@ -53,7 +53,17 @@ const router = createRouter({
         return { path: '/events/' + to.params.afterEvent }
       }
     },
-    
+    {
+      path: '/:catchAll(.*)',
+      name: 'notFound',
+      component: NotFoundView,
+    },
+    {
+      path: '/404/:resource',
+      name: 'page-404',
+      component: NotFoundView,
+      props: true
+    },
   ],
 })
 

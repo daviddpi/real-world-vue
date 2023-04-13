@@ -14,7 +14,8 @@ const events = ref(null)
 const perPage = 2
 const totalEvent = ref(null)
 
-onMounted(() => {
+
+onMounted(async () => {
   watchEffect(() => {
     EventService.getEvents(perPage, props.page)
       .then((response) => {
@@ -27,21 +28,28 @@ onMounted(() => {
   })
 })
 
+ 
 const totalPage = computed(() => {
   return totalEvent.value / perPage
+})
+
+const loading = computed(() => {
+  return events.value?.length > 0
 })
 </script>
 
 <template>
   <h1>Events For Good</h1>
   <div class="events">
-    <EventCard v-for="event in events" :key="event.id" :event="event" />
+    <div class="loading" v-if="!loading"><div></div><div></div><div></div><div></div></div>
+    <EventCard v-else v-for="event in events" :key="event.id" :event="event" />
     <div class="pagination">
       <RouterLink
         :to="{ name: 'event-list', query: { page: page - 1 } }"
         rel="prev"
         v-if="page != 1"
-        class="prev">Previus</RouterLink
+        class="prev"
+        >Previus</RouterLink
       >
       <RouterLink
         :to="{ name: 'event-list', query: { page: page + 1 } }"
@@ -63,15 +71,51 @@ const totalPage = computed(() => {
   margin-bottom: 25px;
 }
 
-.pagination{
+.pagination {
   display: flex;
   justify-content: space-around;
   width: 280px;
 }
 
-.pagination a{
+.pagination a {
   text-decoration: none;
-   font-size: 21px;
-   color: #353a34;
+  font-size: 21px;
+  color: #353a34;
+}
+
+.loading {
+  display: inline-block;
+  position: relative;
+  width: 80px;
+  height: 80px;
+}
+.loading div {
+  box-sizing: border-box;
+  display: block;
+  position: absolute;
+  width: 64px;
+  height: 64px;
+  margin: 8px;
+  border: 8px solid black;
+  border-radius: 50%;
+  animation: loading 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+  border-color: black transparent transparent transparent;
+}
+.loading div:nth-child(1) {
+  animation-delay: -0.45s;
+}
+.loading div:nth-child(2) {
+  animation-delay: -0.3s;
+}
+.loading div:nth-child(3) {
+  animation-delay: -0.15s;
+}
+@keyframes loading {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 </style>

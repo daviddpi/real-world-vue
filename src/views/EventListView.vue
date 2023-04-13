@@ -11,7 +11,7 @@ const props = defineProps({
 })
 
 const events = ref(null)
-const perPage = 2
+const perPage = 3
 const totalEvent = ref(null)
 const loaded = ref(null)
 
@@ -27,7 +27,6 @@ onMounted(async () => {
         console.log(error)
       })
       .finally(()=>{
-        console.log(loaded.value)
         loaded.value = true
       })
   })
@@ -68,7 +67,6 @@ const totalPage = computed(() => {
   display: flex;
   flex-direction: column;
   align-items: center;
-
   margin-bottom: 25px;
 }
 

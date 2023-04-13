@@ -7,7 +7,7 @@ import { RouterLink, RouterView } from 'vue-router'
     <header>
       <div class="wrapper">
         <nav>
-          <RouterLink :to="{name: 'event-list'}">Events</RouterLink> |
+          <RouterLink :to="{ name: 'event-list' }">Events</RouterLink> |
           <RouterLink :to="{ name: 'about' }">About</RouterLink>
         </nav>
       </div>
@@ -25,11 +25,11 @@ import { RouterLink, RouterView } from 'vue-router'
   color: #2c3e50;
 }
 nav,
-.nav{
+.nav {
   padding: 30px;
 }
 nav a,
-.nav a{
+.nav a {
   font-weight: bold;
   color: #2c3e50;
 }

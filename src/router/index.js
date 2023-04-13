@@ -8,9 +8,11 @@ import LayoutView from '../views/event/LayoutView.vue'
 import NotFoundView from '../views/NotFoundView.vue'
 import NProgress from 'nprogress'
 
-
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
+  scrollBehavior() {
+    return { top: 0 }
+  },
   routes: [
     {
       path: '/',
@@ -33,25 +35,25 @@ const router = createRouter({
         {
           path: '',
           name: 'event-details',
-          component: EventDetails
+          component: EventDetails,
         },
         {
           path: 'register',
           name: 'event-register',
-          component: EventRegisterView
+          component: EventRegisterView,
         },
         {
           path: 'edit',
           name: 'event-edit',
-          component: EventEditView
+          component: EventEditView,
         },
-      ]
+      ],
     },
     {
       path: '/event/:afterEvent(.*)',
-      redirect: to => {
+      redirect: (to) => {
         return { path: '/events/' + to.params.afterEvent }
-      }
+      },
     },
     {
       path: '/:catchAll(.*)',
@@ -62,16 +64,16 @@ const router = createRouter({
       path: '/404/:resource',
       name: 'page-404',
       component: NotFoundView,
-      props: true
+      props: true,
     },
   ],
 })
 
-router.beforeEach(()=>{
+router.beforeEach(() => {
   NProgress.start()
 })
 
-router.afterEach(()=>{
+router.afterEach(() => {
   NProgress.done()
 })
 

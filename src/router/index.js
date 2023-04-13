@@ -6,7 +6,7 @@ import EventRegisterView from '../views/event/RegisterView.vue'
 import EventEditView from '../views/event/EditView.vue'
 import LayoutView from '../views/event/LayoutView.vue'
 import NotFoundView from '../views/NotFoundView.vue'
-
+import NProgress from 'nprogress'
 
 
 const router = createRouter({
@@ -65,6 +65,14 @@ const router = createRouter({
       props: true
     },
   ],
+})
+
+router.beforeEach(()=>{
+  NProgress.start()
+})
+
+router.afterEach(()=>{
+  NProgress.done()
 })
 
 export default router
